@@ -2,6 +2,8 @@ var noble = require('noble');
 
 var peripheralUuid = "6ee08d6e813743aca1f9f76e5273fba1"; //Bluno UUID
 
+var serialCharacteristic;
+
 noble.on('stateChange', function(state) {
   if (state === 'poweredOn') {
     noble.startScanning();
@@ -32,7 +34,8 @@ function explore(peripheral) {
     			service.discoverCharacteristics([], function(error, characteristics){
     				characteristics.forEach(function(characteristic){
     					if(characteristic.uuid == 'dfb1'){ //Bluno's Characteristic UUID on OS X
-    						writeTocharacteristic(characteristic);
+    						//writeTocharacteristic(characteristic);
+                serialCharacteristic = characteristic;
     					}
     				});
     			});
@@ -42,8 +45,46 @@ function explore(peripheral) {
   });
 }
 
-function writeTocharacteristic(characteristic){
-	var buffer = new Buffer("#test#", "utf-8")
-	characteristic.write(buffer);
-	//setTimeout(function(){ writeTocharacteristic(characteristic) },1000);
+function writeTocharacteristic(characteristic,command){
+	var buffer = new Buffer("#"+command+"#", "utf-8")
+  if(characteristic){
+	 characteristic.write(buffer);
+  }
 }
+
+
+
+//COMMAND PROMPT
+var readline = require('readline'),
+    rl = readline.createInterface(process.stdin, process.stdout);
+
+rl.setPrompt('Insect Bot Command> ');
+rl.prompt();
+
+rl.on('line', function(line) {
+  switch(line.trim()) {
+    case 'w':
+      console.log('FORWARD!');
+      writeTocharacteristic(serialCharacteristic,'W');
+      break;
+    case 'a':
+      console.log('LEFT!');
+      writeTocharacteristic(serialCharacteristic,'A');
+      break;
+    case 's':
+      console.log('BACKWARD!');
+      writeTocharacteristic(serialCharacteristic,'S');
+      break;
+    case 'd':
+      console.log('RIGHT!');
+      writeTocharacteristic(serialCharacteristic,'D');
+      break;                  
+    default:
+      console.log(line.trim() + ' is an invalid command!');
+      break;
+  }
+  rl.prompt();
+}).on('close', function() {
+  console.log('Have a great day!');
+  process.exit(0);
+});
