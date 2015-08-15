@@ -2,6 +2,9 @@
 
 This is my [Insectbot Hexa](http://www.dfrobot.com/index.php?route=product/product&path=37_69&product_id=1217#.Vc6rX1NViko) from [DFRobot](http://www.dfrobot.com)
 
+![side](pictures/Side14082015.JPG)
+![front](pictures/Front14082015.JPG)
+
 ## Features
 
 * Walks in 4 directions (Forward, Backward, Left, Right)
