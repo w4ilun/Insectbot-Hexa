@@ -4,6 +4,7 @@ This is my [Insectbot Hexa](http://www.dfrobot.com/index.php?route=product/produ
 
 ![side](pictures/Side14082015.JPG)
 ![front](pictures/Front14082015.JPG)
+<img src="pictures/Front14082015.JPG" width=500 height=200 />
 
 ## Features
 
