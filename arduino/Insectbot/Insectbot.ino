@@ -3,7 +3,9 @@
 #define backServo 2
 #define midServo 3
 
-#define stepRange 60
+#define stepRange 60 //servos move 60 degrees
+
+//servos are centered at 90 degrees
 #define frontStartPos 120
 #define backStartPos 120
 #define midStartPos 60
@@ -41,13 +43,13 @@ void loop()
     while(Serial.available() > 0){
       serialChar = Serial.read();
       if(commandMode){
-        if(serialChar == COMMAND){
+        if(serialChar == COMMAND){ //if we're already in command mode and we see another #, exit command mode
           commandMode = false;
         }else{
-          commandHandler(serialChar);
+          commandHandler(serialChar); //process command when in command mode
         }
       }
-      if(serialChar == COMMAND){
+      if(serialChar == COMMAND){ //if char is #, begin command mode
         commandMode = true;
       }
     }
@@ -77,21 +79,22 @@ void commandHandler(char command){
 }
 
 void moveForward(){
-  for(int i=0; i<stepRange; i++){
+  int i;
+  for(i=0; i<stepRange; i++){
     myMidServo.write(midStartPos + i);
     delay(1);
   } 
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myFrontServo.write(frontStartPos - i);
     myBackServo.write(backStartPos - i);
     delay(1);
   } 
   delay(100);
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myMidServo.write(midStartPos + stepRange - i);
     delay(1);
   }    
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myFrontServo.write(frontStartPos - stepRange + i);
     myBackServo.write(backStartPos - stepRange + i);
     delay(1);
@@ -100,22 +103,23 @@ void moveForward(){
 }
 
 void moveBackward(){
-  for(int i=0; i<stepRange; i++){
+  int i;
+  for(i=0; i<stepRange; i++){
     myFrontServo.write(frontStartPos - i);
     myBackServo.write(backStartPos - i);
     delay(1);
   }
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myMidServo.write(midStartPos + i);
     delay(1);
   }  
   delay(100);
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myFrontServo.write(frontStartPos - stepRange + i);
     myBackServo.write(backStartPos - stepRange + i);
     delay(1);
   }
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myMidServo.write(midStartPos + stepRange - i);
     delay(1);
   }  
@@ -123,21 +127,22 @@ void moveBackward(){
 }
 
 void moveLeft(){
-  for(int i=0; i<stepRange/2; i++){
+  int i;
+  for(i=0; i<stepRange/2; i++){
     myMidServo.write(midStartPos+stepRange/2 + i);
     delay(1);
   } 
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myFrontServo.write(frontStartPos - i);
     myBackServo.write(backStartPos - i);
     delay(1);
   } 
   delay(100);
-  for(int i=0; i<stepRange/2; i++){
-    myMidServo.write(midStartPos + stepRange - i);
+  for(i=0; i<stepRange/2; i++){
+    myMidServo.write(midStartPos + stepRange/2 - i);
     delay(1);
   }    
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myFrontServo.write(frontStartPos - stepRange + i);
     myBackServo.write(backStartPos - stepRange + i);
     delay(1);
@@ -146,21 +151,22 @@ void moveLeft(){
 }
 
 void moveRight(){
-  for(int i=0; i<stepRange/2; i++){
+  int i;
+  for(i=0; i<stepRange/2; i++){
     myMidServo.write(midStartPos + i);
     delay(1);
   } 
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myFrontServo.write(frontStartPos - i);
     myBackServo.write(backStartPos - i);
     delay(1);
   } 
   delay(100);
-  for(int i=0; i<stepRange/2; i++){
+  for(i=0; i<stepRange/2; i++){
     myMidServo.write(midStartPos + stepRange/2 - i);
     delay(1);
   }    
-  for(int i=0; i<stepRange; i++){
+  for(i=0; i<stepRange; i++){
     myFrontServo.write(frontStartPos - stepRange + i);
     myBackServo.write(backStartPos - stepRange + i);
     delay(1);
