@@ -10,6 +10,11 @@ This is my [Insectbot Hexa](http://www.dfrobot.com/index.php?route=product/produ
 * Walks in 4 directions (Forward, Backward, Left, Right)
 * Controlled over BLE from command line tool
 
+## Project Structure
+* **arduino - Arduino sketch for the Insectbot
+* **mobile - Remote Controller, mobile app written with JS using Cordova and BLE plugin
+* **web - Remote Controller, NodeJS cli tool with BLE npm module
+
 ## To Do
 
 * Create mobile app to control bot over BLE
