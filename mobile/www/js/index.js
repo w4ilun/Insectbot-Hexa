@@ -195,11 +195,15 @@ app.initialize(function()
     var serviceUuid = getServiceUuid($(this));
     var characteristicUuid = getCharacteristicUuid($(this));
 
-    var bytes = new Uint8Array(1);
-    bytes[0] = 0;
+    // var bytes = new Uint8Array(1);
+    // bytes[0] = 0;
+    // var value = bluetoothle.bytesToEncodedString(bytes);
+
+    // write(address, serviceUuid, characteristicUuid, value);
+    var bytes = bluetoothle.stringToBytes("#W#");
     var value = bluetoothle.bytesToEncodedString(bytes);
 
-    write(address, serviceUuid, characteristicUuid, value);
+    write(address, serviceUuid, characteristicUuid, value);    
 
     return false;
   });
