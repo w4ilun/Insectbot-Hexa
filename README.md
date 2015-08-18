@@ -11,9 +11,9 @@ This is my [Insectbot Hexa](http://www.dfrobot.com/index.php?route=product/produ
 * Controlled over BLE from command line tool
 
 ## Project Structure
-* **arduino - Arduino sketch for the Insectbot
-* **mobile - Remote Controller, mobile app written with JS using Cordova and BLE plugin
-* **web - Remote Controller, NodeJS cli tool with BLE npm module
+* [**arduino**](https://github.com/w4ilun/Insectbot-Hexa/tree/master/arduino) - Arduino sketch for the Insectbot
+* [**mobile**](https://github.com/w4ilun/Insectbot-Hexa/tree/master/mobile) - Remote Controller, mobile app written with JS using Cordova and BLE plugin
+* [**web**](https://github.com/w4ilun/Insectbot-Hexa/tree/master/web) - Remote Controller, NodeJS cli tool with BLE npm module
 
 ## To Do
 
