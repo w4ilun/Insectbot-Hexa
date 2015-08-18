@@ -41,6 +41,9 @@
         },
         "com.randdusing.bluetoothle": {
             "PACKAGE_NAME": "com.example.controller"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.example.controller"
         }
     },
     "dependent_plugins": {}
