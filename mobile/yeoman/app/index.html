@@ -2,65 +2,42 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Insectbot Controller</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <script src="bower_components/font-awesome/css/font-awesome.css"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
   <body ng-app="yeomanApp">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-
-            <a class="navbar-brand" href="#/">yeoman</a>
-          </div>
-
-          <div class="collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+    <div class="container" ng-controller="MainCtrl">
+      <p ng-bind="device.address"></p>
+      <p ng-bind="device.name"></p>      
+      <section class="joystick y-axis">
+        <button class="joystick-button joystick-up" ng-click="move('forward')">
+          <i class="fa fa-arrow-up fa-5x"></i>
+        </button>
+        <button class="joystick-button joystick-down" ng-click="move('backward')">
+          <i class="fa fa-arrow-down fa-5x"></i>
+        </button>
+      </section>
+      <section class="joystick x-axis">
+        <button class="joystick-button joystick-left" ng-click="move('left')">
+          <i class="fa fa-arrow-left fa-5x"></i>
+        </button>
+        <button class="joystick-button joystick-right" ng-click="move('right')">
+          <i class="fa fa-arrow-right fa-5x"></i>
+        </button>
+      </section>
     </div>
-
-    <div class="container">
-    <div ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
-    </div>
-
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
