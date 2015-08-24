@@ -6,7 +6,7 @@
 node_modules
 npm-debug.log
 platforms
-plugins
+mobile/plugins
 !plugins/android.json
 !plugins/fetch.json
 
