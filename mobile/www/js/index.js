@@ -1,8 +1,8 @@
 var controller = (function(){
   
-  var blunoAddress;
-  var blunoServiceUUID = 'dfb0';
-  var blunoCharacteristicUUID = 'dfb1';
+  var blunoAddress; //mac address of Bluno
+  var blunoServiceUUID = 'dfb0'; //serial service as reported on Android
+  var blunoCharacteristicUUID = 'dfb1'; //serial characteristic as reported on Android
 
   function init(){
     document.addEventListener('deviceready', onDeviceReady, false);
@@ -39,7 +39,7 @@ var controller = (function(){
 
   function startScanSuccess(obj){
     if(obj.status == "scanResult" && obj.name == "Bluno"){
-      bluetoothle.stopScan();
+      bluetoothle.stopScan(); //stop scan after device is found
       blunoAddress = obj.address;
       bluetoothle.connect(connectSuccess, errorHandler, {address:blunoAddress});
     }
@@ -65,6 +65,7 @@ var controller = (function(){
   }
 
   function command(direction){
+    //commands to Bluno based on direction
     switch(direction){
       case 'forward':
         writeToBlunoSerial("#W#");
@@ -92,10 +93,11 @@ var controller = (function(){
       characteristicUuid: blunoCharacteristicUUID,
       type: "noResponse"
     };
-    bluetoothle.write(function(){}, errorHandler, params);    
+    bluetoothle.write(function(){}, errorHandler, params); //write command to characteristic
   }
 
   function errorHandler(){
+    //alert on error
     navigator.notification.alert(
       'An Error Has Occured',
       null,
