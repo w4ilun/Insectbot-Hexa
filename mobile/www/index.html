@@ -4,18 +4,33 @@
     <title>Insectbot Controller</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
   </head>
   <body>
-  	<h2>Device: <span class="name"></span><span class="address"></span></h2>
-  	<h2>Connection Status: <span class="status">Not Connected</span></h2>
-  	<h2>Discovery Status: <span class="discovery">Not Discovered</span></h2>
-  	<button id="forward" class="joystick">Forward</button>
-  	<button id="backward" class="joystick">Backward</button>
-  	<button id="left" class="joystick">Left</button>
-  	<button id="right" class="joystick">Right</button>
+    <div class="status">
+    	<h2>Connection Status: 
+        <span class="connection-status">
+          <i class="fa fa-spinner fa-spin"></i>
+        </span>
+      </h2>
+      <h2>Discovery Status: 
+        <span class="discovery-status">
+          <i class="fa fa-spinner fa-spin"></i>
+        </span>
+      </h2>
+    </div>
+    <div class="controller">
+      <div class="y-axis">
+      	<button id="forward" class="joystick fa fa-arrow-circle-o-up"></button>
+      	<button id="backward" class="joystick fa fa-arrow-circle-o-down"></button>
+      </div>
+      <div class="x-axis">
+      	<button id="left" class="joystick fa fa-arrow-circle-o-left"></button>
+      	<button id="right" class="joystick fa fa-arrow-circle-o-right"></button>
+      </div>
+    </div>
   </body>
 </html>

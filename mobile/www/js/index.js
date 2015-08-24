@@ -1,133 +1,113 @@
-var bluetoothle;
-var blunoAddress;
-var blunoServices;
+var controller = (function(){
+  
+  var blunoAddress;
+  var blunoServiceUUID = 'dfb0';
+  var blunoCharacteristicUUID = 'dfb1';
 
-document.addEventListener("deviceready", onDeviceReady, false);
+  function init(){
+    document.addEventListener('deviceready', onDeviceReady, false);
+  }  
 
-function onDeviceReady(){
-  bluetoothle.initialize(initializeSuccess, initializeError, {request:true});
-}
-
-function initializeSuccess(obj){
-  if (obj.status == "enabled"){
-    scan();
-  }else{
-    bluetoothle.enable(enableSuccess, enableError);
+  function onDeviceReady(){
+    //bind DOM to events
+    var joystickElements = document.getElementsByClassName('joystick');
+    Array.prototype.forEach.call(joystickElements,function(joystickElement){
+      joystickElement.addEventListener('click',function(event){
+        var direction = event.target.id;
+        command(direction);
+      },false);
+    });
+    //init bluetooth
+    bluetoothle.initialize(initializeSuccess, errorHandler, {request:true});
   }
-}
 
-function enableSuccess(){
-  if (obj.status == "enabled"){
-    scan();
-  }
-}
-
-function scan(){
-  bluetoothle.startScan(startScanSuccess, startScanError,{serviceUuids:[]});
-}
-
-function startScanSuccess(obj){
-  if (obj.status == "scanResult"){
-    $('.name').html(obj.name);
-    $('.address').html(obj.address);
-    if(obj.name == "Bluno"){
-      blunoAddress = obj.address;
-      bluetoothle.connect(connectSuccess, connectError, {address:blunoAddress});
+  function initializeSuccess(obj){
+    if (obj.status == "enabled"){
+      scanDevices();
+    }else{
+      bluetoothle.enable(function(obj){
+        if(obj.status == "enabled"){
+          scanDevices();
+        }
+      }, errorHandler);
     }
   }
-  else if (obj.status == "scanStarted"){
-    console.log("Scan Started");
+
+  function scanDevices(){
+    bluetoothle.startScan(startScanSuccess, errorHandler,{serviceUuids:[]});
   }
-  else{
-    console.log("Unexpected Start Scan Status");
+
+  function startScanSuccess(obj){
+    if(obj.status == "scanResult" && obj.name == "Bluno"){
+      bluetoothle.stopScan();
+      blunoAddress = obj.address;
+      bluetoothle.connect(connectSuccess, errorHandler, {address:blunoAddress});
+    }
+    else if(obj.status == "scanStarted"){
+      console.log("Scan Started");
+    }
+    else{
+      errorHandler();
+    }  
   }
-}
 
-function connectSuccess(obj){
-  if(obj.status == "connected"){
-    $(".status").html("Connected");
-    bluetoothle.discover(discoverSuccess, discoverError, {address:blunoAddress});
-    //command("forward");
+  function connectSuccess(obj){
+    if(obj.status == "connected"){
+      document.getElementsByClassName('connection-status')[0].innerHTML = "Connected";
+      bluetoothle.discover(discoverSuccess, errorHandler, {address:blunoAddress});
+    }
   }
-}
 
-function command(direction){
-  switch(direction){
-    case "forward":
-      writeCharacteristicValue("#W#");
-      break;
-    case "backward":
-      writeCharacteristicValue("#S#");
-      break;
-    case "left":
-      writeCharacteristicValue("#S#");
-      break;
-    case "right":
-      writeCharacteristicValue("#D#");
-      break;                  
-    default:
-      console.log("Command Not Supported");
+  function discoverSuccess(obj){
+    if(obj.status == "discovered"){
+      document.getElementsByClassName('discovery-status')[0].innerHTML = "Discovered";
+    }     
   }
-}
 
-function writeCharacteristicValue(value){
-  var bytes = bluetoothle.stringToBytes(value);
-  var encodedString = bluetoothle.bytesToEncodedString(bytes);
-
-  var params = {
-    address:blunoAddress,
-    value:encodedString,
-    serviceUuid:"dfb0",
-    characteristicUuid:"dfb1",
-    type:"noResponse"
-  };
-
-  bluetoothle.write(writeSuccess, writeError,params);
-}
-
-function writeSuccess(){
-}
-
-function discoverSuccess(obj){
-  if(obj.status == "discovered"){
-    // var $services = $(".services");
-    // obj.services.forEach(function(service){
-    //   var $service = $("<li>"+service.serviceUuid+"<ul></ul></li>");
-    //   $services.append($service);
-    //   service.characteristics.forEach(function(characteristic){
-    //     var $characteristic = $("<li>"+characteristic.characteristicUuid+"</li>");
-    //     $service.find("ul").append($characteristic);
-    //   });
-    // });
-    // command("forward");
-    $(".discovery").html("Discovery Complete");
-    $(".joystick").on('touchstart',function(e){
-      var direction = $(e.target).attr('id');
-      command(direction);
-    });
+  function command(direction){
+    switch(direction){
+      case 'forward':
+        writeToBlunoSerial("#W#");
+        break;
+      case 'backward':
+        writeToBlunoSerial("#S#");
+        break;
+      case 'left':
+        writeToBlunoSerial("#A#");
+        break;
+      case 'right':
+        writeToBlunoSerial("#D#");
+        break;
+      default:
+        errorHandler();
+    }
   }
-}
 
-function writeError(obj){
-  console.log("Write Error");
-}
+  function writeToBlunoSerial(value){
+    var encodedString = bluetoothle.bytesToEncodedString(bluetoothle.stringToBytes(value));
+    var params = {
+      address: blunoAddress,
+      value: encodedString,
+      serviceUuid: blunoServiceUUID,
+      characteristicUuid: blunoCharacteristicUUID,
+      type: "noResponse"
+    };
+    bluetoothle.write(function(){}, errorHandler, params);    
+  }
 
-function discoverError(obj){
-  console.log("Discover Error");
-}
+  function errorHandler(){
+    navigator.notification.alert(
+      'An Error Has Occured',
+      null,
+      'Error',
+      'OK'
+    );    
+  }  
 
-function initializeError(obj){
-  console.log("Initialize Error");
-}
+  return {
+    init : init
+  }
 
-function enableError(){    
-  console.log("Enable Error");
-}
+})();
 
-function startScanError(){
-  console.log("Scan Error");
-}
-
-function connectError(){
-  console.log("Connect Error"); 
-}
+controller.init();
