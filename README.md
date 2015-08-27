@@ -21,3 +21,7 @@ This is my [Insectbot Hexa](http://www.dfrobot.com/index.php?route=product/produ
 * Add autonomous mode
 * Report sensor readings to app over BLE
 * 3D print new mechanical design
+
+## License
+
+[MIT](https://github.com/w4ilun/Insectbot-Hexa/blob/master/LICENSE)
