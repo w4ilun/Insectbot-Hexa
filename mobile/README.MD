@@ -15,3 +15,7 @@ It is a Cordova web app that uses a Bluetooth LE plugin [BluetoothLE](https://gi
 * (optional) ```cordova plugin add cordova-plugin-vibration```
 * Build```cordova build android --release```
 * Run on device```cordova run android --device```
+
+###License
+
+[MIT](https://github.com/w4ilun/Insectbot-Hexa/blob/master/LICENSE)
